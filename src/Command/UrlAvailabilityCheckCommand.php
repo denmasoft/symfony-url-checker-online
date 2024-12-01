@@ -33,8 +33,7 @@ class UrlAvailabilityCheckCommand extends Command
         $this
             ->setDescription('Check if a URL is valid and online')
             ->addArgument('url', InputArgument::REQUIRED, 'URL to check')
-            ->addOption('timeout', null, InputArgument::OPTIONAL, 'Connection timeout in seconds', 10)
-            ->addOption('cloudflare-bypass', null, InputArgument::OPTIONAL, 'Attempt to bypass Cloudflare protection', true);
+            ->addOption('timeout', null, InputArgument::OPTIONAL, 'Connection timeout in seconds', 10);
     }
 
     /**
@@ -108,7 +107,6 @@ class UrlAvailabilityCheckCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $url = $input->getArgument('url');
         $timeout = $input->getOption('timeout');
-        $cloudflareBypass = $input->getOption('cloudflare-bypass');
 
         // Validate URL first
         $validationErrors = $this->validateUrl($url);
@@ -125,11 +123,7 @@ class UrlAvailabilityCheckCommand extends Command
                 'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'Accept-Language' => 'en-US,en;q=0.5',
             ];
-
-            if ($cloudflareBypass) {
-                // Add additional headers that might help bypass Cloudflare
-                $headers['Referer'] = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST);
-            }
+            $headers['Referer'] = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST);
 
             $response = $this->httpClient->request('GET', $url, [
                 'timeout' => $timeout,
