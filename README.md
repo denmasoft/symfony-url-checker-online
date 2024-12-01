@@ -2,14 +2,13 @@
 
 ## Overview
 
-The Symfony url checker online is a Symfony command-line tool designed to verify the online status of web URLs. It provides robust URL validation, connection checking, and includes features to handle complex network scenarios like Cloudflare protection.
+The Symfony url checker online is a Symfony command-line tool designed to verify the online status of web URLs.
 
 ## Features
 
 - ✅ Comprehensive URL validation
 - 🌐 HTTP/HTTPS protocol support
 - 🛡️ Security checks against private networks
-- 🕵️ Cloudflare and captcha protection detection
 - 📊 Detailed status reporting
 
 ## System Requirements
@@ -53,16 +52,10 @@ php bin/console app:check-url https://example.com
 php bin/console app:check-url https://example.com --timeout=5
 ```
 
-2. Cloudflare Bypass Mode (default: true)
-```bash
-php bin/console app:check-url https://protected-site.com
-```
-
 ## Command Options
 
 - `url`: (Required) The URL to check
 - `--timeout`: Connection timeout in seconds (default: 10)
-- `--cloudflare-bypass`: Attempt to bypass Cloudflare protection (default: true)
 
 ## Security Considerations
 
